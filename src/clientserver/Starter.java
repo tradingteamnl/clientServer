@@ -3,13 +3,20 @@
  */
 package clientserver;
 
+import global.FileSystem;
 import global.GetIpAddress;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.util.Formatter;
 
 /**
  *
  * @author michel_desktop
  */
 public class Starter {
+    
+    //maak objecten
+    FileSystem fileSystem = new FileSystem();
     
     /**
      * Start het programma
@@ -28,6 +35,9 @@ public class Starter {
             //deze code is voor het krijgen van het ip4 address
             GetIpAddress ipAddress = new GetIpAddress();
             String ip4Address = ipAddress.getIp4();
+            
+            //kijk of het ip klopt met het ip address wat is opgeslagen in het systeem 
+            
             
             //stuur het ip address door naar de hoogd server
             
