@@ -3,6 +3,7 @@
  */
 package clientserver;
 
+import JSON.JSONArray;
 import global.FileSystem;
 import global.GetIpAddress;
 import java.net.Inet4Address;
@@ -34,8 +35,8 @@ public class Starter {
         try {
             //deze code is voor het krijgen van het ip4 address
             GetIpAddress ipAddress = new GetIpAddress();
-            String ip4Address = ipAddress.getIp4();
-            
+            JSONArray ip4Address = ipAddress.getIp4();
+            //System.out.println(ip4Address);
             //kijk of het ip klopt met het ip address wat is opgeslagen in het systeem 
             
             
