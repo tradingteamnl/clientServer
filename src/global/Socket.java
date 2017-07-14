@@ -3,6 +3,7 @@
  */
 package global;
 
+import JSON.JSONObject;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class Socket {
         client.close();*/
     }
 
-    public void test() throws IOException {
+    public void setUpConnenction(JSONObject dataToSend) throws IOException {
         int port = 9099;
         String serverName = "127.0.0.1";
 
@@ -45,7 +46,7 @@ public class Socket {
         OutputStream outToServer = client.getOutputStream();
         DataOutputStream out = new DataOutputStream(outToServer);
 
-        out.writeUTF("Client send " + client.getLocalSocketAddress());
+        out.writeUTF(""+dataToSend);
         InputStream inFromServer = client.getInputStream();
         DataInputStream in = new DataInputStream(inFromServer);
 

@@ -37,7 +37,7 @@ public class GetIpAddress {
             displayInterfaceInformation(netint);
         }
 
-        System.out.println(ipArray);
+        //return de array
         return ipArray;
 
     }
@@ -49,17 +49,16 @@ public class GetIpAddress {
      * @throws SocketException Bij een error
      */
     private void displayInterfaceInformation(NetworkInterface netint) throws SocketException {
-        out.printf("Display name: %s\n", netint.getDisplayName());
-        out.printf("Name: %s\n", netint.getName());
         Enumeration<InetAddress> inetAddresses = netint.getInetAddresses();
         for (InetAddress inetAddress : Collections.list(inetAddresses)) {
-            out.printf("InetAddress: %s\n", inetAddress);
-            
+
             //ipRaw
             String ipRaw = "" + inetAddress;
-            
+
             //Ip
             String ip = ipRaw.replace("/", "");
+
+            //vul de ip adres in de array
             ipArray.put(ip);
         }
         out.printf("\n");
