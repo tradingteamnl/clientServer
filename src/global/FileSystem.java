@@ -77,6 +77,7 @@ public class FileSystem {
         PrintWriter writer;
         writer = new PrintWriter(fileLocation() + fileName, "UTF-8");
         writer.println(FileData);
+        writer.close();
     }
 
     /**
