@@ -51,7 +51,7 @@ public class Starter {
             
             try {
                 Socket socket = new Socket();
-                socket.setUpConnenction(sendIpObject);
+                socket.sendData(sendIpObject);
             } catch (Exception e) {
                 System.err.println(e);
             }
