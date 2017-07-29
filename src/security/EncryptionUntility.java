@@ -20,11 +20,11 @@ public class EncryptionUntility {
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     /**
-     * calcalte hash
-     * @param secret secret key
+     * Hash
+     * @param secret key
      * @param url url
-     * @param encryption encryption type
-     * @return code
+     * @param encryption encryption
+     * @return string
      */
     public static String calculateHash(String secret, String url, String encryption) {
 
@@ -57,8 +57,8 @@ public class EncryptionUntility {
     }
 
     /**
-     * Nonce
-     * @return noce 
+     * Generate nonce
+     * @return nonce
      */
     public static String generateNonce() {
 
@@ -93,9 +93,9 @@ public class EncryptionUntility {
     }
 
     /**
-     * 
+     * Byte to ehx
      * @param bytes bytes
-     * @return hex ode 
+     * @return hex
      */
     private static String bytesToHex(byte[] bytes) {
 
@@ -111,5 +111,4 @@ public class EncryptionUntility {
 
         return new String(hexChars);
     }
-
 }
