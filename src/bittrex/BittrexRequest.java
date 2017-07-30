@@ -33,30 +33,29 @@ public class BittrexRequest {
     private final String PUBLIC = "public", MARKET = "market", ACCOUNT = "account";
     private final String encryptionAlgorithm = "HmacSHA512";
     private JSONObject bittrexConfig;
-    private String apiKey;
-    private String secretKey;
+    private String apikey;
+    private String secret;
     
     //maak object
     FileSystem filesystem = new FileSystem();
     
-    /**
-     * Constructor
-     * @param apiKey public key
-     * @param secretKey secretKey 
-     */
-    public BittrexRequest(String apiKey, String secretKey) {
-        this.apiKey = apiKey;
-        this.secretKey = secretKey;
+  
+    public BittrexRequest(String apikey, String secret) {
+        System.out.println(apikey);
+        this.apikey = apikey;
+        this.secret = secret;
+        System.out.println(secret);
     }
 
-    public void setAuthKeysFromTextFile(String textFile) { // Add the text file containing the key & secret in the same path as the source code
-
+    public void setAuthKeysFromTextFile(String textFile) {
+        // Add the text file containing the key & secret in the same path as the source code
+        
         try (Scanner scan = new Scanner(getClass().getResourceAsStream(textFile))) {
 
             String apikeyLine = scan.nextLine(), secretLine = scan.nextLine();
 
-            apiKey = apikeyLine.substring(apikeyLine.indexOf("\"") + 1, apikeyLine.lastIndexOf("\""));
-            secretKey = secretLine.substring(secretLine.indexOf("\"") + 1, secretLine.lastIndexOf("\""));
+            apikey = apikeyLine.substring(apikeyLine.indexOf("\"") + 1, apikeyLine.lastIndexOf("\""));
+            secret = secretLine.substring(secretLine.indexOf("\"") + 1, secretLine.lastIndexOf("\""));
 
         } catch (NullPointerException | IndexOutOfBoundsException e) {
 
@@ -141,7 +140,6 @@ public class BittrexRequest {
     }
 
     public String getBalances() { // Returns all balances in your account
-
         return getJson(API_VERSION, ACCOUNT, "getbalances");
     }
 
@@ -309,14 +307,14 @@ public class BittrexRequest {
     private String getResponseBody(String url) {
 
         String result = null;
-        url += "apikey=" + apiKey + "&nonce=" + EncryptionUntility.generateNonce();
+        url += "apikey=" + apikey + "&nonce=" + EncryptionUntility.generateNonce();
 
         try {
 
             HttpClient client = HttpClientBuilder.create().build();
             HttpGet request = new HttpGet(url);
 
-            request.addHeader("apisign", EncryptionUntility.calculateHash(secretKey, url, encryptionAlgorithm)); // Attaches signature as a header
+            request.addHeader("apisign", EncryptionUntility.calculateHash(secret, url, encryptionAlgorithm)); // Attaches signature as a header
 
             HttpResponse httpResponse = client.execute(request);
 
