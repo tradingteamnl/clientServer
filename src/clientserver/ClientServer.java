@@ -76,8 +76,6 @@ public class ClientServer {
             GetIpAddress ipAddress = new GetIpAddress();
             JSONArray ip4Address = ipAddress.getIp4();
 
-            System.out.println(ip4Address);
-
             //stuur het ip address door naar de server
             JSONObject sendIpObject = new JSONObject();
             sendIpObject.put("methoden", "getLocalIp");
@@ -89,7 +87,7 @@ public class ClientServer {
             try {
                 Socket socket = new Socket();
                 socket.sendData(sendIpObject);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.err.println(e);
             }
 
