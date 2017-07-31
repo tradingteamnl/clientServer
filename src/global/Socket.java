@@ -16,7 +16,7 @@ import java.io.OutputStream;
  */
 public class Socket {
 
-    public Socket() throws IOException {
+    /*public Socket() throws IOException {
         /*int port = 9099;
         String serverName = "127.0.0.1";
 
@@ -32,10 +32,11 @@ public class Socket {
         DataInputStream in = new DataInputStream(inFromServer);
 
         System.out.println("Server says " + in.readUTF());
-        client.close();*/
-    }
+        client.close();
+    }*/
 
-    public void setUpConnenction(JSONObject dataToSend) throws IOException {
+    
+    public void sendData(JSONObject dataToSend) throws IOException {
         int port = 9099;
         String serverName = "127.0.0.1";
 

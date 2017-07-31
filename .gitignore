@@ -63,3 +63,4 @@ $RECYCLE.BIN/
 *.lnk
 /nbproject/private/
 /build/
+/dist/

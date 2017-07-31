@@ -17,10 +17,6 @@ import javax.swing.filechooser.FileSystemView;
  *
  * @author michel
  */
-/**
- *
- * @author michel_desktop
- */
 public class FileSystem {
     //maakt objecten aan
 
@@ -53,14 +49,14 @@ public class FileSystem {
         FileSystemView fw = fr.getFileSystemView();
 
         if ("windows".equals(getosplatform.getOS())) {
-            return Paths.get("C:\\trading").toString() + "\\";
+            return Paths.get("C:\\clientServer").toString() + "\\";
         }
 
         if ("mac".equals(getosplatform.getOS())) {
-            return Paths.get(fw.getDefaultDirectory() + "//Documents//trading").toString() + "//";
+            return Paths.get(fw.getDefaultDirectory() + "//Documents//clientServer").toString() + "//";
         }
 
-        return Paths.get(fw.getDefaultDirectory() + "//Documents//trading").toString() + "//";
+        return Paths.get(fw.getDefaultDirectory() + "//Documents//clientServer").toString() + "//";
     }
 
     /**
@@ -77,6 +73,7 @@ public class FileSystem {
         PrintWriter writer;
         writer = new PrintWriter(fileLocation() + fileName, "UTF-8");
         writer.println(FileData);
+        writer.close();
     }
 
     /**
