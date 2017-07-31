@@ -65,7 +65,7 @@ public class GetBalance {
         //voer licentie toe
         sendObject.put("publicKey", PUBLIC_KEY);
         sendObject.put("methoden", "balanceUpdate");
-        sendObject.put("data", object.getJSONArray("result"));
+        sendObject.put("data", objectData);
     
         //probeer data naar de server te verturen
         try {
