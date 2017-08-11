@@ -8,6 +8,7 @@ import JSON.JSONObject;
 import bittrex.GetBalance;
 import global.GetIpAddress;
 import global.Socket;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Timer;
@@ -18,28 +19,72 @@ import java.util.TimerTask;
  * @author michel_desktop
  */
 public class ClientServer {
-    
-    //bittrex keys
-    private static String bittrexApiKey = "885a6bef5a104692b26aed858b1e5475";
-    private static String bittrexApiSecret = "c55cc5dc80244e48a569e2286fad7176";
 
+    //variable die gevuld moeten worden met de data uit de properties file
+    //bittrex keys
+    /*private static String bittrexApiKey;
+    private static String bittrexApiKeySecret;
+    private static boolean loadBittrex;*/
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
+        //variable
+        String bittrexApiKey = null;
+        String bittrexApiKeySecret = null;
+        boolean loadBittrex = false;
+        
+        //public key
+        String publicKey= null;
+        
+        //maak objct aan
+        PropertiesGetKey propertiesGetKey;
+
+        //probeer object propertiesGetKey
+        try {
+            //maak object aan
+            propertiesGetKey = new PropertiesGetKey();
+            
+            //vul varirable
+            loadBittrex = propertiesGetKey.isBittrexLoad();
+            bittrexApiKey = propertiesGetKey.getBittrexApiKey();
+            bittrexApiKeySecret = propertiesGetKey.getBittrexApiSecretKey();
+            
+            //laat algemene keys
+            publicKey = propertiesGetKey.getPubicKey();
+            
+        } catch (FileNotFoundException ex) {
+            
+            //Error als het bestand niet is gevonden
+            System.err.println("[ERROR] [CLIENTSERVER] Config.propersties kan niet worden gevonden!");
+            System.err.println("[ERROR] [CLIENTSERVER] " + ex);
+            System.exit(1);
+        } catch (IOException ex) {
+            
+            //Error als niet alle data goed verwerkt word
+            System.err.println("[ERROR] [CLIENTSERVER] Er is een probleem om alle propersties in te laden!");
+            System.err.println("[ERROR] [CLIENTSERVER] " + ex);
+            System.exit(1);
+        }
+        
+        //laat alle variable
+        //fillVariable();
+        System.out.println("test" + bittrexApiKey);
         
         //maak klasse getBalance aan
-        GetBalance getBalance = new GetBalance(bittrexApiKey, bittrexApiSecret);
-        
+        GetBalance getBalance = new GetBalance(bittrexApiKey, bittrexApiKeySecret, publicKey);
+
         //maak timetask
         TimerTask task = new TimerTask() {
 
             @Override
             public void run() {
                 try {
+
                     //reload alle methoden om de minut
                     getBalance.getBalance();
-                    
+
                 } catch (Exception ex) {
                     System.err.println(ex);
                 }
@@ -96,4 +141,7 @@ public class ClientServer {
             System.err.println(ex);
         }
     }
+
 }
+
+//the spy who loved me
