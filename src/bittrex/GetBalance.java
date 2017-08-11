@@ -9,7 +9,6 @@ import JSON.JSONObject;
 import global.Socket;
 import java.io.IOException;
 
-
 /**
  *
  * @author michel
@@ -22,9 +21,10 @@ public class GetBalance {
     //maak bittrexRequest classe
     BittrexRequest bittrexRequest;
     Socket socket = new Socket();
-    
+
     /**
      * Constructor
+     *
      * @param apiKey public key
      * @param secretKey private key
      * @param publicKey public key
@@ -37,13 +37,13 @@ public class GetBalance {
         //laat de constructor van bittrexRequest
         bittrexRequest = new BittrexRequest(API_KEY, SECRET_KEY);
     }
-    
+
     /**
-     * 
+     *
      * @throws java.lang.Exception
      */
-    public void getBalance() throws Exception{
-        
+    public void getBalance() throws Exception {
+
         //vraag de balance op van alle coins
         String balanceString = bittrexRequest.getBalances();
         System.out.println(balanceString);
@@ -57,7 +57,7 @@ public class GetBalance {
         
         //kijk of het gelukt is
         boolean succes = object.getBoolean("success");
-        
+
         //als het niet goed is gelukt laat dan het programma stoppen door middel van een exceptions
         //als het werkt word bittrex in de lisjt toegevoegd van exchange. Zodat de server van welke exchange er allemaal data binnen komt
         if(!succes){
@@ -69,7 +69,6 @@ public class GetBalance {
             array.put("bittrex");
         }
         
-        
         //maak JSONObject data
         JSONObject objectData = new JSONObject();
         objectData.put("poloniexBalance", "test");
@@ -80,14 +79,12 @@ public class GetBalance {
         sendObject.put("publicKey", PUBLIC_KEY);
         sendObject.put("methoden", "balanceUpdate");
         sendObject.put("data", objectData);
-    
+
         //probeer data naar de server te verturen
         try {
             socket.sendData(sendObject);
         } catch (IOException ex) {
             System.err.println("[ERROR] [GETBALANCE] Kan de nieuwe balance niet naar de server versturen.");
         }
-    
-    
     }
 }
