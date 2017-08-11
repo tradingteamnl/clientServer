@@ -4,6 +4,7 @@
 package bittrex;
 
 //import
+import JSON.JSONArray;
 import JSON.JSONObject;
 import global.Socket;
 import java.io.IOException;
@@ -15,8 +16,8 @@ import java.io.IOException;
  */
 public class GetBalance {
     
-    private String apiKey, secretKey;
-    private final String PUBLIC_KEY = "BLABLABLA";
+    private final String API_KEY, SECRET_KEY;
+    private final String PUBLIC_KEY;
 
     //maak bittrexRequest classe
     BittrexRequest bittrexRequest;
@@ -26,12 +27,15 @@ public class GetBalance {
      * Constructor
      * @param apiKey public key
      * @param secretKey private key
+     * @param publicKey public key
      */
-    public GetBalance(String apiKey, String secretKey) {
-        this.apiKey = apiKey;
-        this.secretKey = secretKey;
+    public GetBalance(String apiKey, String secretKey, String publicKey) {
+        this.API_KEY = apiKey;
+        this.SECRET_KEY = secretKey;
+        this.PUBLIC_KEY = publicKey;
         
-        bittrexRequest = new BittrexRequest(apiKey, secretKey);
+        //laat de constructor van bittrexRequest
+        bittrexRequest = new BittrexRequest(API_KEY, SECRET_KEY);
     }
     
     /**
@@ -43,24 +47,34 @@ public class GetBalance {
         //vraag de balance op van alle coins
         String balanceString = bittrexRequest.getBalances();
         System.out.println(balanceString);
+        
         //maak er een JSONobject van
         JSONObject object = new JSONObject(balanceString);
         JSONObject sendObject = new JSONObject();
+        
+        //maak een exchange array aan
+        JSONArray array = new JSONArray();
         
         //kijk of het gelukt is
         boolean succes = object.getBoolean("success");
         
         //als het niet goed is gelukt laat dan het programma stoppen door middel van een exceptions
+        //als het werkt word bittrex in de lisjt toegevoegd van exchange. Zodat de server van welke exchange er allemaal data binnen komt
         if(!succes){
             
             //Exception
             throw new Exception("Er is een probleem bij balance op te vragen bij bittrex."
                     +"\nEr van bittrex is "+object.getString("message"));
+        } else {
+            array.put("bittrex");
         }
+        
         
         //maak JSONObject data
         JSONObject objectData = new JSONObject();
+        objectData.put("poloniexBalance", "test");
         objectData.put("bittrexBalance", object.getJSONArray("result"));
+        objectData.put("exchangeArray", array);
         
         //voer licentie toe
         sendObject.put("publicKey", PUBLIC_KEY);
