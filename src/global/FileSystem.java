@@ -4,6 +4,7 @@
 package global;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -87,5 +88,29 @@ public class FileSystem {
         FileSystemView fw = fr.getFileSystemView();
         return new String(Files.readAllBytes(Paths.get(fileLocation() + file)));
     }
-}
 
+    /**
+     *
+     * @param file bestand naam
+     * @return true of false
+     */
+    public boolean fileExcist(String file) {
+        //if exists
+        if (Files.notExists(Paths.get(fileLocation() + file))) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    /**
+     * Geef de bestand locatie aan
+     * @param file bestand naam
+     * @return Locatie waar het bestand staat in het os
+     */
+    public String inputStreamFileLocation(String file){
+        
+        //filelocatie en de bestansnaam
+        return fileLocation() + file;
+    }
+}
